@@ -37,7 +37,7 @@ import de.undercouch.gradle.tasks.download.Download
 
 task getAgent(type: Download) {
    def rootProject = projectDir.path
-   src 'https://repo1.maven.org/maven2/com/newrelic/agent/java/newrelic-agent/'+project.javaAgentVersion+'/newrelic-agent-'+project.javaAgentVersion+'.jar'
+   src 'https://download.newrelic.com/newrelic/java-agent/newrelic-agent/'+project.javaAgentVersion+'/newrelic-agent-'+project.javaAgentVersion+'.jar'
    dest projectDir.path+"/libs/newrelic-agent-"+project.javaAgentVersion+".jar"
 }
 
