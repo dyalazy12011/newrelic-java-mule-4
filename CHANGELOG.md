@@ -1,3 +1,43 @@
+## Version: [v3.0.2](https://github.com/dyalazy12011/newrelic-java-mule-4/releases/tag/v3.0.2) | Created: 2024-10-22
+### Bug Fixes
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update build.gradle
+- Update settings.gradle
+- Update settings.gradle
+- Update settings.gradle
+- Update settings.gradle
+- Update settings.gradle
+- Update settings.gradle
+
+
 ## Version: [v3.0.1](https://github.com/dyalazy12011/newrelic-java-mule-4/releases/tag/v3.0.1) | Created: 2024-10-11
 ### Bug Fixes
 - Ixed problems with events and added http connector
