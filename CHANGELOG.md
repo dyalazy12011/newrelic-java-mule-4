@@ -1,3 +1,8 @@
+## Version: [v3.1.2](https://github.com/dyalazy12011/newrelic-java-mule-4/releases/tag/v3.1.2) | Created: 2024-10-22
+### Bug Fixes
+- Update module
+
+
 ## Version: [v3.1.1](https://github.com/dyalazy12011/newrelic-java-mule-4/releases/tag/v3.1.1) | Created: 2024-10-22
 ### Features
 - Add mule http 1.4
