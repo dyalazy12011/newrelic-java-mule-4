@@ -2,6 +2,7 @@ package org.mule.service.http.impl.service.server.grizzly;
 
 import java.net.InetSocketAddress;
 
+import java.util.logging.Level;
 import org.glassfish.grizzly.filterchain.FilterChainContext;
 import org.glassfish.grizzly.filterchain.FilterChainEvent;
 import org.glassfish.grizzly.filterchain.NextAction;
