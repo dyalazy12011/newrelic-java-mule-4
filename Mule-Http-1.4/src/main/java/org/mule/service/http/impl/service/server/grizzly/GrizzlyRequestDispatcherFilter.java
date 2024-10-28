@@ -30,6 +30,7 @@ public abstract class GrizzlyRequestDispatcherFilter {
 
 	@Trace(dispatcher=true)
 	public NextAction handleRead(final FilterChainContext ctx) {
+		NewRelic.getAgent().getLogger().log(Level.INFO, "FilterChainContext: " + ctx);
 		InetSocketAddress tmpLocal = (InetSocketAddress) ctx.getConnection().getLocalAddress();
 		DefaultServerAddress tmpServerAdd = new DefaultServerAddress(tmpLocal.getAddress(), tmpLocal.getPort());
 		
@@ -66,6 +67,8 @@ public abstract class GrizzlyRequestDispatcherFilter {
 	
 	@Trace(dispatcher=true)
 	public NextAction handleEvent(FilterChainContext ctx, FilterChainEvent event) {
+		NewRelic.getAgent().getLogger().log(Level.INFO, "FilterChainContext: " + ctx);
+		NewRelic.getAgent().getLogger().log(Level.INFO, "FilterChainEvent: " + event);
 		String msgClass = "UnknownMessageClass";
 		String eventClass = "UnknownEventClass";
 		

@@ -26,6 +26,7 @@ abstract class DefaultSourceCallback<T, A> {
 		FlowConstruct flowConstruct = messageProcessContext.getFlowConstruct();
 		String flowName = flowConstruct.getName();
 		if(flowName != null && !flowName.isEmpty()) {
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
 			NewRelic.addCustomParameter("Flow-Name",flowName);
 			NewRelic.getAgent().getTransaction().setTransactionName(TransactionNamePriority.CUSTOM_LOW, false, "Flows", flowName);
 		}
