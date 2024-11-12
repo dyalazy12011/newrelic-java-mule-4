@@ -1,3 +1,12 @@
+## Version: [v3.1.4](https://github.com/dyalazy12011/newrelic-java-mule-4/releases/tag/v3.1.4) | Created: 2024-11-12
+### Bug Fixes
+- Update code
+- Remove higher version
+- Remove include 'Mule-Http-1.2'
+- Remove include 'Mule-Http-1.4'
+- Remove include 'Mule-Scheduler'
+
+
 ## Version: [v3.1.3](https://github.com/dyalazy12011/newrelic-java-mule-4/releases/tag/v3.1.3) | Created: 2024-10-29
 ### Bug Fixes
 - Update config
