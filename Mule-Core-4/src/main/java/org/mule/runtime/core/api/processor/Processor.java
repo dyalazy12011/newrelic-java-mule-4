@@ -3,6 +3,7 @@ package org.mule.runtime.core.api.processor;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.mule.runtime.api.metadata.TypedValue;
 import org.mule.runtime.core.api.event.CoreEvent;
 import org.mule.runtime.core.internal.event.MuleUtils;
 
@@ -20,6 +21,11 @@ public abstract class Processor {
 
 	@Trace(async=true)
 	public CoreEvent process(CoreEvent event) {
+		TypedValue<?> flowNameType = event.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		NRCoreUtils.recordCoreEvent("Input", event, attributes);
 		if(!MuleReactorUtils.initialized) {

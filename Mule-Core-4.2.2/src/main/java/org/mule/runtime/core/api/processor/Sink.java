@@ -3,6 +3,7 @@ package org.mule.runtime.core.api.processor;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.mule.runtime.api.metadata.TypedValue;
 import org.mule.runtime.core.api.construct.BackPressureReason;
 import org.mule.runtime.core.api.event.CoreEvent;
 
@@ -19,6 +20,11 @@ public abstract class Sink {
 
 	@Trace
 	public BackPressureReason emit(CoreEvent event) {
+		TypedValue<?> flowNameType = event.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		NRCoreUtils.recordCoreEvent("Input", event, attributes);
 		TracedMethod traced = NewRelic.getAgent().getTracedMethod();
@@ -31,6 +37,11 @@ public abstract class Sink {
 	
 	@Trace(async=true,excludeFromTransactionTrace=true)
 	public void accept(final CoreEvent event) {
+		TypedValue<?> flowNameType = event.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom","Sink",getClass().getSimpleName(),"accept"});
 		Weaver.callOriginal();
 	}

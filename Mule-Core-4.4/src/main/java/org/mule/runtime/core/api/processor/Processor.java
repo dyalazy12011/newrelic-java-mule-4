@@ -17,6 +17,11 @@ public abstract class Processor {
 
 	@Trace
 	public CoreEvent process(CoreEvent event) {
+		TypedValue<?> flowNameType = event.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		NRCoreUtils.recordCoreEvent("Input", event, attributes);
 		CoreEvent returnedEvent = Weaver.callOriginal();

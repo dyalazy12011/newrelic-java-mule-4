@@ -14,6 +14,7 @@ import com.newrelic.api.agent.weaver.MatchType;
 import com.newrelic.api.agent.weaver.Weave;
 import com.newrelic.api.agent.weaver.Weaver;
 import com.nr.instrumentation.mule.api.NRBiConsumer;
+import org.mule.runtime.api.metadata.TypedValue;
 
 @Weave(type=MatchType.Interface)
 public abstract class ExecutableComponent {
@@ -29,7 +30,12 @@ public abstract class ExecutableComponent {
 	
 	@Trace
 	public CompletableFuture<Event> execute(Event event) {
-		
+
+		TypedValue<?> flowNameType = event.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		String location = null;
 		EventContext context = event.getContext();
 		if(context != null) {

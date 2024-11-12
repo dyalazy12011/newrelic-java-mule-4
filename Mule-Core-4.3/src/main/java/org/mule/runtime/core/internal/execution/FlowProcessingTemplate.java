@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mule.runtime.api.component.Component;
 import org.mule.runtime.api.component.execution.CompletableCallback;
 import org.mule.runtime.api.component.location.ComponentLocation;
+import org.mule.runtime.api.metadata.TypedValue;
 import org.mule.runtime.core.api.event.CoreEvent;
 import org.mule.runtime.core.internal.exception.MessagingException;
 import org.reactivestreams.Publisher;
@@ -23,6 +24,11 @@ public abstract class FlowProcessingTemplate {
 
 	@Trace
 	public CoreEvent routeEvent(CoreEvent muleEvent) {
+		TypedValue<?> flowNameType = muleEvent.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		NRCoreUtils.recordCoreEvent("Input", muleEvent, attributes);
 		CoreEvent returnedEvent = Weaver.callOriginal();
@@ -34,6 +40,11 @@ public abstract class FlowProcessingTemplate {
 
 	@Trace
 	public Publisher<CoreEvent> routeEventAsync(CoreEvent event) {
+		TypedValue<?> flowNameType = event.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		NRCoreUtils.recordCoreEvent("Input", event, attributes);
 		return Weaver.callOriginal();

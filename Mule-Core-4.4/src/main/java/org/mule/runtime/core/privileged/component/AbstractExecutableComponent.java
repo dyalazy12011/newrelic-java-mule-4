@@ -23,6 +23,11 @@ public abstract class AbstractExecutableComponent extends AbstractComponent {
 
 	@Trace(dispatcher=true)
 	public CompletableFuture<ExecutionResult> execute(InputEvent paramInputEvent) {
+		TypedValue<?> flowNameType = paramInputEvent.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		CompletableFuture<ExecutionResult> f = Weaver.callOriginal();
 		ComponentLocation location = getLocation();
 		if(location != null) {
@@ -36,6 +41,11 @@ public abstract class AbstractExecutableComponent extends AbstractComponent {
 
 	@Trace(dispatcher=true)
 	public CompletableFuture<Event> execute(Event paramEvent) {
+		TypedValue<?> flowNameType = paramEvent.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		if(CoreEvent.class.isInstance(paramEvent)) {
 			NRMuleHeaders headers = MuleUtils.getHeaders((CoreEvent)paramEvent);
 			HeaderUtils.acceptHeaders(headers);

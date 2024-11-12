@@ -78,6 +78,11 @@ abstract class AbstractEventContext implements BaseEventContext {
 	}
 
 	public void success(CoreEvent event) {
+		TypedValue<?> flowNameType = event.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		if(headers != null && !headers.isEmpty()) {
 			HeaderUtils.acceptHeaders(headers);
 			headers.clear();

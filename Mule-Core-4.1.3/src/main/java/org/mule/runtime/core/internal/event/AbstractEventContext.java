@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import org.mule.runtime.api.event.EventContext;
+import org.mule.runtime.api.metadata.TypedValue;
 import org.mule.runtime.core.api.event.CoreEvent;
 import org.mule.runtime.core.api.exception.FlowExceptionHandler;
 import org.mule.runtime.core.privileged.event.BaseEventContext;
@@ -68,6 +69,11 @@ abstract class AbstractEventContext implements BaseEventContext {
 
 	@Trace(async=true,excludeFromTransactionTrace=true)
 	public void success(CoreEvent event) {
+		TypedValue<?> flowNameType = event.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		if(token != null) {
 			token.linkAndExpire();
 			token = null;

@@ -32,6 +32,11 @@ class AbstractMessageProcessorChain {
 
 	@Trace(dispatcher=true)
 	public CoreEvent process(final CoreEvent event) {
+		TypedValue<?> flowNameType = event.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom","MuleProcessorChain",getClass().getSimpleName(),"process",chainName});
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		NRCoreUtils.recordCoreEvent("Input", event, attributes);

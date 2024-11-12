@@ -21,6 +21,11 @@ public abstract class Sink {
 	
 	@Trace(async=true,excludeFromTransactionTrace=true)
 	public void accept(final CoreEvent event) {
+		TypedValue<?> flowNameType = event.getVariables().get("app_feature_name");
+		if (flowNameType != null) {
+			String flowName = (String) flowNameType.getValue();
+			NewRelic.setTransactionName("Fugu", "/flow/" + flowName);
+		}
 		NewRelic.getAgent().getTracedMethod().setMetricName(new String[] {"Custom","Sink",getClass().getSimpleName(),"accept"});
 		Weaver.callOriginal();
 	}
